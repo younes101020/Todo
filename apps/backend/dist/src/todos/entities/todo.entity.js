@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TodoEntity = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const dto_1 = require("../dto");
 class TodoEntity {
 }
 exports.TodoEntity = TodoEntity;
@@ -23,9 +24,17 @@ __decorate([
     __metadata("design:type", String)
 ], TodoEntity.prototype, "title", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ required: false, nullable: true }),
-    __metadata("design:type", Boolean)
-], TodoEntity.prototype, "completed", void 0);
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], TodoEntity.prototype, "status", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], TodoEntity.prototype, "priority", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ required: false }),
+    __metadata("design:type", Array)
+], TodoEntity.prototype, "tags", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Date)

@@ -9,26 +9,61 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateTodoDto = void 0;
+exports.CreateTodoDto = exports.Priority = exports.Status = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+var Status;
+(function (Status) {
+    Status["NOT_STARTED"] = "NOT_STARTED";
+    Status["IN_PROGRESS"] = "IN_PROGRESS";
+    Status["DONE"] = "DONE";
+})(Status || (exports.Status = Status = {}));
+var Priority;
+(function (Priority) {
+    Priority["URGENT"] = "URGENT";
+    Priority["CAN_WAIT"] = "CAN_WAIT";
+    Priority["OPTIONAL"] = "OPTIONAL";
+})(Priority || (exports.Priority = Priority = {}));
 class CreateTodoDto {
-    constructor() {
-        this.completed = false;
-    }
 }
 exports.CreateTodoDto = CreateTodoDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MinLength)(5),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: "Title of the task"
+    }),
     __metadata("design:type", String)
 ], CreateTodoDto.prototype, "title", void 0);
 __decorate([
-    (0, class_validator_1.IsBoolean)(),
+    (0, class_validator_1.MinLength)(5, {
+        each: true,
+    }),
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiProperty)({ required: false, default: false }),
-    __metadata("design:type", Boolean)
-], CreateTodoDto.prototype, "completed", void 0);
+    (0, swagger_1.ApiProperty)({
+        description: "Tags which qualifies the task"
+    }),
+    __metadata("design:type", Array)
+], CreateTodoDto.prototype, "tags", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsEnum)(Status),
+    (0, swagger_1.ApiProperty)({
+        description: "Current status of the task",
+        default: Status.NOT_STARTED,
+        enum: Status
+    }),
+    __metadata("design:type", String)
+], CreateTodoDto.prototype, "status", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsEnum)(Priority),
+    (0, swagger_1.ApiProperty)({
+        description: "Priority level of the task",
+        default: Priority.CAN_WAIT,
+        enum: Priority
+    }),
+    __metadata("design:type", String)
+], CreateTodoDto.prototype, "priority", void 0);
 //# sourceMappingURL=create-todo.dto.js.map

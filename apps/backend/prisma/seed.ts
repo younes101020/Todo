@@ -4,13 +4,15 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  // create two dummy todos
+  // create three dummy todos
   const post1 = await prisma.todo.upsert({
-    where: { title: 'Remplir le carnet de santé' },
+    where: { title: "Remplir le carnet de santé" },
     update: {},
     create: {
-      title: 'Remplir le carnet de santé',
-      completed: false,
+      title: "Remplir le carnet de santé",
+      status: "NOT_STARTED",
+      priority: "CAN_WAIT",
+      tags: ["santé", "hopital", "rdv"],
     },
   });
 
@@ -19,11 +21,23 @@ async function main() {
     update: {},
     create: {
       title: "Prendre rendez-vous chez le dentiste",
-      completed: true,
+      status: "NOT_STARTED",
+      priority: "URGENT",
     },
   });
 
-  console.log({ post1, post2 });
+  const post3 = await prisma.todo.upsert({
+    where: { title: "S'inscrire à la boxe" },
+    update: {},
+    create: {
+      title: "S'inscrire à la boxe",
+      status: "IN_PROGRESS",
+      priority: "CAN_WAIT",
+      tags: ["sport", "hygiene"],
+    },
+  });
+
+  console.log({ post1, post2, post3 });
 }
 
 // execute the main function
