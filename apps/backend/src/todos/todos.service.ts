@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateTodoDto, UpdateTodoDto } from './dto';
-import { PaginationInputDto } from '../common/dto';
+import { LazyLoadingInputDto } from '../common/dto';
 
 @Injectable()
 export class TodosService {
@@ -11,8 +11,15 @@ export class TodosService {
     return this.prisma.todo.create({ data: createTodoDto });
   }
 
-  findAll(paginationInputDto: PaginationInputDto) {
-    return this.prisma.todo.findMany(paginationInputDto);
+  findAll({ cursor, limit }: LazyLoadingInputDto) {
+    return this.prisma.todo.findMany({
+      take: limit,
+      skip: cursor ? 1 : undefined,
+      cursor: cursor ? { id: cursor }: undefined,
+      orderBy: {
+        id: 'asc',
+      },
+    });
   }
 
   findOne(id: number) {
