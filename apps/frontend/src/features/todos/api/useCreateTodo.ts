@@ -9,7 +9,7 @@ const createTodoFn = async (newTodo: Todo) => {
         body: JSON.stringify(newTodo)
     });
     if(!response.ok) {
-        throw new Error('Failed to fetch todo')
+        throw new Error('Failed to create todo')
     }
     return response.json();
 };
