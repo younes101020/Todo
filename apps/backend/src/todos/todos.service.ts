@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateTodoDto } from './dto/create-todo.dto';
-import { UpdateTodoDto } from './dto/update-todo.dto';
+import { CreateTodoDto, UpdateTodoDto } from './dto';
+import { PaginationInputDto } from '../common/dto';
 
 @Injectable()
 export class TodosService {
@@ -11,8 +11,8 @@ export class TodosService {
     return this.prisma.todo.create({ data: createTodoDto });
   }
 
-  findAll() {
-    return this.prisma.todo.findMany();
+  findAll(paginationInputDto: PaginationInputDto) {
+    return this.prisma.todo.findMany(paginationInputDto);
   }
 
   findOne(id: number) {
