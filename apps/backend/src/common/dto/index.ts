@@ -1,1 +1,1 @@
-export { PaginationInputDto } from './pagination-input.dto';
+export { LazyLoadingInputDto } from './lazyloading-input.dto';

@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { CreateTodoDto, UpdateTodoDto } from './dto';
-import { PaginationInputDto } from '../common/dto';
+import { LazyLoadingInputDto } from '../common/dto';
 
 @Controller('todos')
 export class TodosController {
@@ -14,9 +14,9 @@ export class TodosController {
 
   @Get()
   findMany(
-    @Query() paginationInputDto?: PaginationInputDto,
+    @Query() lazyLoadingInputDto?: LazyLoadingInputDto,
   ) {
-    return this.todosService.findAll(paginationInputDto);
+    return this.todosService.findAll(lazyLoadingInputDto);
   }
 
   @Get(':id')

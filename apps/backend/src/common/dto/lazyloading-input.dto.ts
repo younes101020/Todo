@@ -1,13 +1,13 @@
 import { IsOptional, IsNumber, Min } from "class-validator";
 
-export class PaginationInputDto {
+export class LazyLoadingInputDto {
     @IsNumber()
     @IsOptional()
     @Min(1)
-    skip: number;
+    cursor: number;
 
     @IsNumber()
     @IsOptional()
-    @Min(1)
-    take: number;
+    @Min(10)
+    limit: number = 10;
 }
