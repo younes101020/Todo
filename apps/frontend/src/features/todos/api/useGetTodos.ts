@@ -1,30 +1,20 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiClient, userQueryKeys } from '@/api';
-import { toast } from 'react-hot-toast';
-import { TSFixMe, User } from '@/types';
+import { getQueryClient } from '@/hooks';
+import { useTodoQueryKey } from './useTodoQueryKey';
 
-const createUserFn = async (newUser: User) => {
-  const response = await apiClient.post('', newUser);
-  return response.data;
+export const getTodos = async () => {
+    const todos = await fetch(`${process.env.REST_API_BASE_URL}/todos`);
+    return todos.json();
 };
 
-// https://tanstack.com/query/latest/docs/react/guides/optimistic-updates
-export function useCreateUser() {
-  const queryClient = useQueryClient();
+// Prefetch todos from server side
+export default async function useGetTodos() {
 
-  return useMutation({
-    mutationFn: createUserFn,
-    onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: userQueryKeys.all });
-    },
-    onSuccess: (data) => {
-      toast.success(`New User ${data.title} Created`);
-    },
-    onError: (err, newUser, context?: TSFixMe) => {
-      queryClient.setQueryData(userQueryKeys.all, context.previousUsers);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: userQueryKeys.all });
-    },
-  });
+  const queryClient = getQueryClient()
+
+  await queryClient.prefetchQuery({
+    queryKey: useTodoQueryKey.all,
+    queryFn: getTodos,
+  })
+
+  return queryClient
 }
