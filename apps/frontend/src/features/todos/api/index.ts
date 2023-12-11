@@ -2,4 +2,4 @@ export * from './useTodoQueryKey';
 export * from './useCreateTodo';
 // export * from './useGetTodo';
 // export * from './useUpdateTodo';
-export { default as useGetTodos } from './useGetTodos';
+export { default as useGetTodos, getTodos } from './useGetTodos';
