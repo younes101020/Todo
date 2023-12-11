@@ -1,9 +1,9 @@
 'use client'
 
-import { Todo } from '@/features/todos/types';
+import { Todo as TodoType } from '@/features/todos/types';
+import { Tag } from './ui';
 
-
-const Todo = ({ title, tags, status, priority }: Omit<Todo, 'id'>) => {
+const Todo = ({ title, tags, status, priority }: Omit<TodoType, 'id'>) => {
     return (
         <li className="flex flex-col gap-2 border-2 px-4 py-2 border-red-400/75 rounded-md border-dotted ring-2 ring-red-400/50 ring-offset-2">
             <div className="flex gap-2 items-center">
@@ -17,12 +17,8 @@ const Todo = ({ title, tags, status, priority }: Omit<Todo, 'id'>) => {
             </div>
             <ul className="w-auto inline-block font-light flex gap-2 text-xs">
                 {
-                    tags.map((tag) => {
-                        return (
-                          <li className="bg-emerald-600/50 border-2 border-emerald-200 text-emerald-900 px-2 rounded-lg">
-                            {tag}
-                          </li>  
-                        )
+                    tags.map((tag, index) => {
+                        return <Tag key={index} tag={tag} />
                     })
                 }
             </ul>

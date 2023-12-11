@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { userQueryKeys } from './useTodoQueryKey';
+import { useTodoQueryKey } from './useTodoQueryKey';
 import { toast } from 'react-hot-toast';
 import { Todo } from '../types';
 
@@ -21,16 +21,16 @@ export function useCreateUser() {
   return useMutation({
     mutationFn: createTodoFn,
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: userQueryKeys.all });
+      await queryClient.cancelQueries({ queryKey: useTodoQueryKey.all });
     },
     onSuccess: (data) => {
       toast.success(`New User ${data.title} Created`);
     },
     onError: (err, newTodo, context?: any) => {
-      queryClient.setQueryData(userQueryKeys.all, context.previousUsers);
+      queryClient.setQueryData(useTodoQueryKey.all, context.previousUsers);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: userQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: useTodoQueryKey.all });
     },
   });
 }
