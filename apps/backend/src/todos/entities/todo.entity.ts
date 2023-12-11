@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Todo } from "@prisma/client";
-import { Status, Priority } from "../dto";
+import { Status } from "../dto";
 
 export class TodoEntity implements Todo {
     @ApiProperty()
@@ -13,7 +13,7 @@ export class TodoEntity implements Todo {
     status: Status;
 
     @ApiProperty()
-    priority: Priority;
+    priority: number;
 
     @ApiProperty({ required: false })
     tags: string[];
