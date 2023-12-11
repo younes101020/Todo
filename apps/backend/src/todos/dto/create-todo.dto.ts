@@ -4,19 +4,16 @@ import {
   IsOptional,
   IsString,
   MinLength,
-  IsEnum
+  IsEnum,
+  IsInt,
+  Min,
+  Max
 } from 'class-validator';
 
 export enum Status {
   NOT_STARTED = "NOT_STARTED",
   IN_PROGRESS = "IN_PROGRESS",
   DONE = "DONE"
-}
-
-export enum Priority {
-  URGENT = "URGENT",
-  CAN_WAIT = "CAN_WAIT",
-  OPTIONAL = "OPTIONAL"
 }
 
 export class CreateTodoDto {
@@ -47,11 +44,12 @@ export class CreateTodoDto {
   status: Status;
 
   @IsOptional()
-  @IsEnum(Priority)
+  @IsInt()
+  @Min(1)
+  @Max(3)
   @ApiProperty({ 
     description: "Priority level of the task",
-    default: Priority.CAN_WAIT,
-    enum: Priority 
+    default: 2
   })
-  priority: Priority;
+  priority: 2;
 }

@@ -11,7 +11,7 @@ async function main() {
     create: {
       title: "Remplir le carnet de santé",
       status: "NOT_STARTED",
-      priority: "CAN_WAIT",
+      priority: 1,
       tags: ["santé", "hopital", "rdv"],
     },
   });
@@ -22,7 +22,7 @@ async function main() {
     create: {
       title: "Prendre rendez-vous chez le dentiste",
       status: "NOT_STARTED",
-      priority: "URGENT",
+      priority: 2,
     },
   });
 
@@ -32,7 +32,7 @@ async function main() {
     create: {
       title: "S'inscrire à la boxe",
       status: "IN_PROGRESS",
-      priority: "CAN_WAIT",
+      priority: 3,
       tags: ["sport", "hygiene"],
     },
   });

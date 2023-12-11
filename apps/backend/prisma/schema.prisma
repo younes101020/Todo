@@ -14,7 +14,7 @@ model Todo {
   id          Int      @id @default(autoincrement())
   title       String   @unique
   status      Status   @default(NOT_STARTED)
-  priority    Priority @default(CAN_WAIT)
+  priority    Int      @default(2)
   tags        String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -24,10 +24,4 @@ enum Status {
   NOT_STARTED
   IN_PROGRESS
   DONE
-}
-
-enum Priority {
-  URGENT
-  CAN_WAIT
-  OPTIONAL
 }
