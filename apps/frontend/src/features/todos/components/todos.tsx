@@ -1,12 +1,24 @@
 'use client'
 
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getTodos } from '@/features/todos/api'
 import { Todo as TodoType } from '@/features/todos/types'
 import { Todo } from "./todo";
 
 const Todos = () => {
-    const { data } = useQuery({ queryKey: ['todos', 'pagination', 3], queryFn: () => getTodos(3) });
+    const { 
+        isPending,
+        isError,
+        error,
+        data,
+        isFetching,
+        isPlaceholderData,
+    } = useQuery({ 
+        queryKey: ['todos', 'pagination', null],
+        queryFn: () => getTodos,
+        placeholderData: keepPreviousData,
+    });
+    console.log(data)
 
     return (
         <div className="flex justify-center py-5">
