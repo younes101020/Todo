@@ -8,6 +8,6 @@ export class LazyLoadingInputDto {
 
     @IsNumber()
     @IsOptional()
-    @Min(10)
-    limit: number = 10;
+    @Min(3)
+    limit: number = 3;
 }

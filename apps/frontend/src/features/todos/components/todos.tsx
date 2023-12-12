@@ -6,7 +6,7 @@ import { Todo as TodoType } from '@/features/todos/types'
 import { Todo } from "./todo";
 
 const Todos = () => {
-    const { data } = useQuery({ queryKey: ['todos'], queryFn: getTodos });
+    const { data } = useQuery({ queryKey: ['todos', 'pagination', 3], queryFn: () => getTodos(3) });
 
     return (
         <div className="flex justify-center py-5">

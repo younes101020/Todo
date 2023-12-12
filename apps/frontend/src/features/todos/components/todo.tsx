@@ -5,7 +5,7 @@ import { Tag } from './ui';
 
 const Todo = ({ title, tags, status, priority }: Omit<TodoType, 'id'>) => {
     return (
-        <li className="flex flex-col gap-2 border-2 px-4 py-2 border-red-400/75 rounded-md border-dotted ring-2 ring-red-400/50 ring-offset-2">
+        <li className="h-16 flex flex-col gap-2 border-2 px-4 py-2 border-red-400/75 rounded-md border-dotted ring-2 ring-red-400/50 ring-offset-2">
             <div className="flex gap-2 items-center">
                 <input type="checkbox" className="appearance-none w-4 h-4 border-2 border-slate-400/75 rounded-full bg-white
                 focus:outline-none focus:ring-offset-0 focus:ring-1 focus:ring-blue-100
