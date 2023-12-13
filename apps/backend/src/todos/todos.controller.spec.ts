@@ -1,10 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TodosController } from './todos.controller';
 import { TodosService } from './todos.service';
-import { PrismaService } from '../prisma/prisma.service'
-import { ModuleMocker, MockFunctionMetadata } from 'jest-mock';
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
-import { Todo } from '@prisma/client';
 
 
 describe('TodosController', () => {
