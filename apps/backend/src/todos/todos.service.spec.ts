@@ -19,7 +19,7 @@ describe('TodosService', () => {
     prismaclient = module.get(PrismaService)
   });
 
-  it('simulate page 2 of pagination', async () => {
+  it('return ok when cursor is less than 5', async () => {
     const mockedData = [{
       id: 1,
       title: "nourrir chat",
