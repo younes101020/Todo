@@ -3,7 +3,7 @@
 import { Todo as TodoType } from '@/features/todos/types';
 import { Tag } from './ui';
 
-const Todo = ({ title, tags, status, priority }: Omit<TodoType, 'id'>) => {
+const Todo = ({ title, tags, status, priority, createdAt }: Omit<TodoType, 'id'>) => {
     return (
         <li className="h-16 flex flex-col gap-2 border-2 px-4 py-2 border-red-400/75 rounded-md border-dotted ring-2 ring-red-400/50 ring-offset-2">
             <div className="flex gap-2 items-center">
