@@ -33,7 +33,7 @@ jobs:
         run: npm install
 
       - name: Prisma generate
-        run: npm run prisma generate -w apps/backend
+        run: npx prisma generate -w apps/backend
 
       - name: Build
         run: npm run build
