@@ -1,20 +1,22 @@
-import { getQueryClient } from '@/hooks';
-import { useTodoQueryKey } from './useTodoQueryKey';
+import { getQueryClient } from "@/hooks";
+import { useTodoQueryKey } from "./useTodoQueryKey";
 
-export const getTodos = async (cursor: number | null) => {
-    const todos = await fetch(`${process.env.REST_API_BASE_URL}/todos?cursor=${cursor}`);
-    return todos.json();
+export const getTodos = async () => {
+  const todos = await fetch(`${process.env.REST_API_BASE_URL}/todos`);
+  if (!todos.ok) {
+    throw new Error('Failed to fetch todos')
+  }
+  return todos.json();
 };
 
 // Prefetch todos from server side
-export default async function useGetTodos(cursor = null) {
-
-  const queryClient = getQueryClient()
+export default async function useGetTodos() {
+  const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: useTodoQueryKey.pagination(cursor),
-    queryFn: () => getTodos(cursor),
-  })
+    queryKey: useTodoQueryKey.all,
+    queryFn: () => getTodos(),
+  });
 
-  return queryClient
+  return queryClient;
 }

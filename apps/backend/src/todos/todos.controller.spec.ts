@@ -17,7 +17,6 @@ describe('TodosController', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TodosController],
-      //providers: [TodosService, PrismaService],
     }).useMocker(createMock)
     .compile();
 
@@ -26,7 +25,6 @@ describe('TodosController', () => {
   });
 
   it('find all todos', async () => {
-      // jest.spyOn(service, 'findAll').mockImplementation(() => result);
       service.findAll.mockResolvedValueOnce([{
         id: 2,
         title: "promener le chat",
@@ -37,7 +35,10 @@ describe('TodosController', () => {
         updatedAt: mydate,
       }]);
 
-      const allTodos = controller.findMany();
+      const allTodos = controller.findMany({
+        cursor: 6,
+        limit: 3
+      });
 
       await expect(allTodos).resolves.toStrictEqual([{
         id: 2,

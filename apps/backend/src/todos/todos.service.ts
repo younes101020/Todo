@@ -12,11 +12,6 @@ export class TodosService {
   }
 
   findAll({ cursor, limit }: LazyLoadingInputDto) {
-    // business logic simulation (start)
-    if(cursor < 5) {
-      return 'ok'
-    }
-    // business logic simulation (end)
     return this.prisma.todo.findMany({
       take: limit,
       skip: cursor ? 1 : undefined,

@@ -6,6 +6,6 @@ export const useTodoQueryKey = {
     all: ['todos'],
     details: () => [...useTodoQueryKey.all, 'detail'],
     detail: (id: number) => [...useTodoQueryKey.details(), id],
-    pagination: (cursor: number | null) => [...useTodoQueryKey.all, 'pagination', cursor],
+    pagination: (cursor: number) => [...useTodoQueryKey.all, 'pagination', cursor],
     infinite: () => [...useTodoQueryKey.all, 'infinite'],
   };

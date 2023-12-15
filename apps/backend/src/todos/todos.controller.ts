@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { TodosService } from './todos.service';
 import { CreateTodoDto, UpdateTodoDto } from './dto';
 import { LazyLoadingInputDto } from '../common/dto';
-import { ValidationPipe } from './validation/validation.pipe';
 
 @Controller('todos')
 export class TodosController {
@@ -15,7 +14,7 @@ export class TodosController {
 
   @Get()
   findMany(
-    @Query(new ValidationPipe()) lazyLoadingInputDto?: LazyLoadingInputDto,
+    @Query() lazyLoadingInputDto: LazyLoadingInputDto,
   ) {
     return this.todosService.findAll(lazyLoadingInputDto);
   }
