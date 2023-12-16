@@ -19,10 +19,10 @@ This web-based todolist application offers an intuitive interface to easily mana
 - **Database:** PostgreSQL with Prisma
 
 ## Installation
-1. Clone the repository: `git clone https://github.com/younes101020/Todo.git`
+1. Clone the repository: `git clone git@github.com:younes101020/Todo.git`
 2. Navigate to the directory: `cd Todo`
 3. Install dependencies: `npm install`
-4. Start the application: `npm start`
+4. Start the application: `npm run dev`
 
 ## Usage
 1. Open the application in a web browser.
