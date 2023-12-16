@@ -31,6 +31,6 @@ describe('TodosService', () => {
     prismaclient.todo.findMany = jest.fn().mockReturnValueOnce(mockedData)
 
 
-    expect(service.findAll({cursor: 1, limit: 2})).toBe('ok');
+    expect(service.findAll({cursor: 1, limit: 2})).toBe(mockedData);
   });
 });
