@@ -10,6 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String   @unique
+  progress    Int      @default(0)
+  todos       Todo[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model Todo {
   id          Int      @id @default(autoincrement())
   title       String   @unique
@@ -18,6 +27,8 @@ model Todo {
   tags        String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  initiator   Project  @relation(fields: [initiatorId], references: [id])
+  initiatorId Int
 }
 
 enum Status {

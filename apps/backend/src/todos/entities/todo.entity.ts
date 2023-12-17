@@ -15,6 +15,9 @@ export class TodoEntity implements Todo {
     @ApiProperty()
     priority: number;
 
+    @ApiProperty()
+    initiatorId: number;
+
     @ApiProperty({ required: false })
     tags: string[];
 
