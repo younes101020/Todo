@@ -1,0 +1,1 @@
+export { generateSeeding } from './seeding';
