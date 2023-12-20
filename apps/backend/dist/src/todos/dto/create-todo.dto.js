@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateTodoDto = exports.Priority = exports.Status = void 0;
+exports.CreateTodoDto = exports.Status = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 var Status;
@@ -18,15 +18,17 @@ var Status;
     Status["IN_PROGRESS"] = "IN_PROGRESS";
     Status["DONE"] = "DONE";
 })(Status || (exports.Status = Status = {}));
-var Priority;
-(function (Priority) {
-    Priority["URGENT"] = "URGENT";
-    Priority["CAN_WAIT"] = "CAN_WAIT";
-    Priority["OPTIONAL"] = "OPTIONAL";
-})(Priority || (exports.Priority = Priority = {}));
 class CreateTodoDto {
 }
 exports.CreateTodoDto = CreateTodoDto;
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({
+        description: "The project id tied to this todo"
+    }),
+    __metadata("design:type", Number)
+], CreateTodoDto.prototype, "initiatorId", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
@@ -58,12 +60,13 @@ __decorate([
 ], CreateTodoDto.prototype, "status", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsEnum)(Priority),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.Min)(1),
+    (0, class_validator_1.Max)(3),
     (0, swagger_1.ApiProperty)({
         description: "Priority level of the task",
-        default: Priority.CAN_WAIT,
-        enum: Priority
+        default: 2
     }),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], CreateTodoDto.prototype, "priority", void 0);
 //# sourceMappingURL=create-todo.dto.js.map

@@ -19,8 +19,18 @@ let TodosService = class TodosService {
     create(createTodoDto) {
         return this.prisma.todo.create({ data: createTodoDto });
     }
-    findAll() {
-        return this.prisma.todo.findMany();
+    findAll({ initiatorId: projectId, cursor, limit }) {
+        return this.prisma.todo.findMany({
+            where: {
+                initiatorId: projectId,
+            },
+            take: limit,
+            skip: cursor ? 1 : undefined,
+            cursor: cursor ? { id: cursor } : undefined,
+            orderBy: {
+                id: 'asc',
+            },
+        });
     }
     findOne(id) {
         return this.prisma.todo.findUnique({ where: { id } });

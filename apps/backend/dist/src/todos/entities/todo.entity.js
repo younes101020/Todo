@@ -29,8 +29,12 @@ __decorate([
 ], TodoEntity.prototype, "status", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], TodoEntity.prototype, "priority", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], TodoEntity.prototype, "initiatorId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ required: false }),
     __metadata("design:type", Array)

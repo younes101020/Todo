@@ -1,6 +1,6 @@
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateTodoDto } from './dto/create-todo.dto';
-import { UpdateTodoDto } from './dto/update-todo.dto';
+import { CreateTodoDto, UpdateTodoDto } from './dto';
+import { LazyLoadingInputDto } from '../common/dto';
 export declare class TodosService {
     private prisma;
     constructor(prisma: PrismaService);
@@ -8,45 +8,50 @@ export declare class TodosService {
         id: number;
         title: string;
         status: import(".prisma/client").$Enums.Status;
-        priority: import(".prisma/client").$Enums.Priority;
+        priority: number;
         tags: string[];
         createdAt: Date;
         updatedAt: Date;
+        initiatorId: number;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
-    findAll(): import(".prisma/client").Prisma.PrismaPromise<{
+    findAll({ initiatorId: projectId, cursor, limit }: LazyLoadingInputDto): import(".prisma/client").Prisma.PrismaPromise<{
         id: number;
         title: string;
         status: import(".prisma/client").$Enums.Status;
-        priority: import(".prisma/client").$Enums.Priority;
+        priority: number;
         tags: string[];
         createdAt: Date;
         updatedAt: Date;
+        initiatorId: number;
     }[]>;
     findOne(id: number): import(".prisma/client").Prisma.Prisma__TodoClient<{
         id: number;
         title: string;
         status: import(".prisma/client").$Enums.Status;
-        priority: import(".prisma/client").$Enums.Priority;
+        priority: number;
         tags: string[];
         createdAt: Date;
         updatedAt: Date;
+        initiatorId: number;
     }, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: number, updateTodoDto: UpdateTodoDto): import(".prisma/client").Prisma.Prisma__TodoClient<{
         id: number;
         title: string;
         status: import(".prisma/client").$Enums.Status;
-        priority: import(".prisma/client").$Enums.Priority;
+        priority: number;
         tags: string[];
         createdAt: Date;
         updatedAt: Date;
+        initiatorId: number;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     remove(id: number): import(".prisma/client").Prisma.Prisma__TodoClient<{
         id: number;
         title: string;
         status: import(".prisma/client").$Enums.Status;
-        priority: import(".prisma/client").$Enums.Priority;
+        priority: number;
         tags: string[];
         createdAt: Date;
         updatedAt: Date;
+        initiatorId: number;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }

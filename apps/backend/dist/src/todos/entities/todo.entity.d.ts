@@ -1,10 +1,11 @@
 import { Todo } from "@prisma/client";
-import { Status, Priority } from "../dto";
+import { Status } from "../dto";
 export declare class TodoEntity implements Todo {
     id: number;
     title: string;
     status: Status;
-    priority: Priority;
+    priority: number;
+    initiatorId: number;
     tags: string[];
     createdAt: Date;
     updatedAt: Date;

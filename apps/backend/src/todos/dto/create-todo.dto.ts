@@ -7,7 +7,8 @@ import {
   IsEnum,
   IsInt,
   Min,
-  Max
+  Max,
+  IsNumber
 } from 'class-validator';
 
 export enum Status {
@@ -17,6 +18,13 @@ export enum Status {
 }
 
 export class CreateTodoDto {
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: "The project id tied to this todo"
+  })
+  initiatorId: number;
+
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
