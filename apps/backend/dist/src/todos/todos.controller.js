@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TodosController = void 0;
 const common_1 = require("@nestjs/common");
 const todos_service_1 = require("./todos.service");
-const create_todo_dto_1 = require("./dto/create-todo.dto");
-const update_todo_dto_1 = require("./dto/update-todo.dto");
+const dto_1 = require("./dto");
+const dto_2 = require("../common/dto");
 let TodosController = class TodosController {
     constructor(todosService) {
         this.todosService = todosService;
@@ -24,8 +24,8 @@ let TodosController = class TodosController {
     create(createTodoDto) {
         return this.todosService.create(createTodoDto);
     }
-    findAll() {
-        return this.todosService.findAll();
+    findMany(lazyLoadingInputDto) {
+        return this.todosService.findAll(lazyLoadingInputDto);
     }
     findOne(id) {
         return this.todosService.findOne(+id);
@@ -42,15 +42,16 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_todo_dto_1.CreateTodoDto]),
+    __metadata("design:paramtypes", [dto_1.CreateTodoDto]),
     __metadata("design:returntype", void 0)
 ], TodosController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [dto_2.LazyLoadingInputDto]),
     __metadata("design:returntype", void 0)
-], TodosController.prototype, "findAll", null);
+], TodosController.prototype, "findMany", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -63,7 +64,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_todo_dto_1.UpdateTodoDto]),
+    __metadata("design:paramtypes", [String, dto_1.UpdateTodoDto]),
     __metadata("design:returntype", void 0)
 ], TodosController.prototype, "update", null);
 __decorate([

@@ -3,14 +3,10 @@ export declare enum Status {
     IN_PROGRESS = "IN_PROGRESS",
     DONE = "DONE"
 }
-export declare enum Priority {
-    URGENT = "URGENT",
-    CAN_WAIT = "CAN_WAIT",
-    OPTIONAL = "OPTIONAL"
-}
 export declare class CreateTodoDto {
+    initiatorId: number;
     title: string;
     tags: string[];
     status: Status;
-    priority: Priority;
+    priority: 2;
 }
