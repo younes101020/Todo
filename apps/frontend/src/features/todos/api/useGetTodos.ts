@@ -1,14 +1,10 @@
 import { getQueryClient } from "@/hooks";
 import { useTodoQueryKey } from "./useTodoQueryKey";
+import { apiClient } from './http-common';
 
-export const getTodos = async () => {
-  const todos = await fetch(`${process.env.REST_API_BASE_URL}/todos`, {
-    cache: "no-store"
-  });
-  if (!todos.ok) {
-    throw new Error("Failed to fetch todos");
-  }
-  return todos.json();
+export const getTodos = async (queryParams: any = { initiatorId: 0 }) => {
+  const todos = await apiClient.get("", { params: queryParams })
+  return todos.data;
 };
 
 // Prefetch todos from server side

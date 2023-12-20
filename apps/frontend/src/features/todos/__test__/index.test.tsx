@@ -11,7 +11,7 @@ describe("Home", () => {
         title={"acheter des piles"}
         tags={["tele", "confort"]}
         status={"IN_PROGRESS"}
-        priority={"URGENT"}
+        priority={3}
         createdAt={24}
       />
     );
