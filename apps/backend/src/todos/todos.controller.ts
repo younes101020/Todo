@@ -14,7 +14,7 @@ export class TodosController {
 
   @Get()
   findMany(
-    @Query() lazyLoadingInputDto?: LazyLoadingInputDto,
+    @Query() lazyLoadingInputDto: LazyLoadingInputDto,
   ) {
     return this.todosService.findAll(lazyLoadingInputDto);
   }

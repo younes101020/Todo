@@ -1,18 +1,3 @@
-<<<<<<< Updated upstream
-import { IsOptional, IsNumber, Min } from "class-validator";
-
-export class LazyLoadingInputDto {
-    @IsNumber()
-    @IsOptional()
-    @Min(1)
-    cursor: number;
-
-    @IsNumber()
-    @IsOptional()
-    @Min(10)
-    limit: number = 10;
-}
-=======
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsNumber, Min, IsNotEmpty } from 'class-validator';
 
@@ -39,4 +24,3 @@ export class LazyLoadingInputDto {
   })
   initiatorId: number;
 }
->>>>>>> Stashed changes

@@ -1,43 +1,54 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Status } from '@prisma/client';
+import { faker } from '@faker-js/faker';
+import { generateSeeding } from '../src/helper'
 
 // initialize the Prisma Client
 const prisma = new PrismaClient();
 
+async function seedRecord() {
+  const projectTitle = faker.lorem.word({ length: { min: 5, max: 8 }, strategy: 'closest' });
+  const todoTitle1 = faker.lorem.word({ length: { min: 5, max: 10 }, strategy: 'shortest' });
+  const todoTitle2 = faker.lorem.word({ length: { min: 5, max: 10 }, strategy: 'shortest' });
+
+  const post = await prisma.project.upsert({
+    where: { title: projectTitle },
+    update: {},
+    create: {
+      title: projectTitle,
+      todos: {
+        connectOrCreate: [
+          {
+            where: {
+              title: todoTitle1,
+            },
+            create: {
+              title: todoTitle1,
+              status: ['NOT_STARTED', 'IN_PROGRESS'][Math.floor(Math.random()*2)] as Status,
+              priority: 1,
+              tags: ['', '', ''].map(_ => faker.lorem.word()),
+            },
+          },
+          {
+            where: {
+              title: todoTitle2,
+            },
+            create: {
+              title: todoTitle2,
+              status: ['NOT_STARTED', 'IN_PROGRESS'][Math.floor(Math.random()*2)] as Status,
+              priority: 3,
+              tags: ['', '', ''].map(_ => faker.lorem.word()),
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  return post;
+}
+
 async function main() {
-  // create three dummy todos
-  const post1 = await prisma.todo.upsert({
-    where: { title: "Remplir le carnet de santé" },
-    update: {},
-    create: {
-      title: "Remplir le carnet de santé",
-      status: "NOT_STARTED",
-      priority: 1,
-      tags: ["santé", "hopital", "rdv"],
-    },
-  });
-
-  const post2 = await prisma.todo.upsert({
-    where: { title: "Prendre rendez-vous chez le dentiste" },
-    update: {},
-    create: {
-      title: "Prendre rendez-vous chez le dentiste",
-      status: "NOT_STARTED",
-      priority: 2,
-    },
-  });
-
-  const post3 = await prisma.todo.upsert({
-    where: { title: "S'inscrire à la boxe" },
-    update: {},
-    create: {
-      title: "S'inscrire à la boxe",
-      status: "IN_PROGRESS",
-      priority: 3,
-      tags: ["sport", "hygiene"],
-    },
-  });
-
-  console.log({ post1, post2, post3 });
+  generateSeeding(seedRecord, 10)
 }
 
 // execute the main function
