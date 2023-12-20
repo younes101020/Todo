@@ -4,7 +4,7 @@ import { Todo as TodoType } from "@/features/todos/types";
 import { Tag } from "./ui";
 
 const initialData = {
-  priority: "border-green-400/75 ring-green-400/50",
+  priority: "border-green-400/75 ring-green-400/50"
 };
 
 const Todo = ({
@@ -12,7 +12,7 @@ const Todo = ({
   tags,
   status,
   priority,
-  createdAt,
+  createdAt
 }: Omit<TodoType, "id">) => {
   let color: string;
 
