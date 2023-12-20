@@ -1,5 +1,3 @@
-const Sidebar = () => {
-    
-}
+const Sidebar = () => {};
 
 export { Sidebar };

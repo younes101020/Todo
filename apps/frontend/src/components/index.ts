@@ -1,1 +1,1 @@
-export { DevToolsQuery } from './devtoolsquery';
+export { DevToolsQuery } from "./devtoolsquery";

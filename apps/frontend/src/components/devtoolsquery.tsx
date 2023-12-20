@@ -1,11 +1,9 @@
-'use client'
+"use client";
 
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const DevToolsQuery = () => {
-    return (
-        <ReactQueryDevtools initialIsOpen={true} />
-    )
-}
+  return <ReactQueryDevtools initialIsOpen={true} />;
+};
 
 export { DevToolsQuery };

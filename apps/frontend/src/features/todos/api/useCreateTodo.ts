@@ -1,17 +1,17 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useTodoQueryKey } from './useTodoQueryKey';
-import { toast } from 'react-hot-toast';
-import { Todo } from '../types';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTodoQueryKey } from "./useTodoQueryKey";
+import { toast } from "react-hot-toast";
+import { Todo } from "../types";
 
 const createTodoFn = async (newTodo: Todo) => {
-    const response = await fetch(`${process.env.REST_API_BASE_URL}/todos`, {
-        method: 'POST',
-        body: JSON.stringify(newTodo)
-    });
-    if(!response.ok) {
-        throw new Error('Failed to create todo')
-    }
-    return response.json();
+  const response = await fetch(`${process.env.REST_API_BASE_URL}/todos`, {
+    method: "POST",
+    body: JSON.stringify(newTodo)
+  });
+  if (!response.ok) {
+    throw new Error("Failed to create todo");
+  }
+  return response.json();
 };
 
 // https://tanstack.com/query/latest/docs/react/guides/optimistic-updates
@@ -31,6 +31,6 @@ export function useCreateUser() {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: useTodoQueryKey.all });
-    },
+    }
   });
 }

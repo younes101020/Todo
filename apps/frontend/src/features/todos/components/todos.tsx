@@ -11,7 +11,7 @@ const Todos = () => {
     useQuery({
       queryKey: useTodoQueryKey.all,
       queryFn: () => getTodos(),
-      placeholderData: keepPreviousData,
+      placeholderData: keepPreviousData
     });
 
   return (
