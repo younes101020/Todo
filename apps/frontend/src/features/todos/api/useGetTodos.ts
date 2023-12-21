@@ -2,7 +2,12 @@ import { getQueryClient } from "@/hooks";
 import { useTodoQueryKey } from "./useTodoQueryKey";
 import { apiClient } from "./http-common";
 
-export const getTodos = async (queryParams: any = { initiatorId: 0 }) => {
+type Lazyloading = {
+  initiatorId: number;
+  cursor: number;
+};
+
+export const getTodos = async (queryParams: Lazyloading) => {
   const todos = await apiClient.get("", { params: queryParams });
   return todos.data;
 };
@@ -11,9 +16,10 @@ export const getTodos = async (queryParams: any = { initiatorId: 0 }) => {
 export default async function useGetTodos() {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: useTodoQueryKey.all,
-    queryFn: () => getTodos()
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: useTodoQueryKey.infinite(),
+    queryFn: ({ pageParam }) => getTodos({ cursor: pageParam, initiatorId: 1 }),
+    initialPageParam: 0
   });
 
   return queryClient;
