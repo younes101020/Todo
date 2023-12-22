@@ -11,18 +11,27 @@ export class TodosService {
     return this.prisma.todo.create({ data: createTodoDto });
   }
 
-  findAll({ initiatorId: projectId, cursor, limit }: LazyLoadingInputDto) {
-    return this.prisma.todo.findMany({
+  async findAll({
+    initiatorId: projectId,
+    cursor,
+    limit,
+  }: LazyLoadingInputDto) {
+    const data = await this.prisma.todo.findMany({
       where: {
         initiatorId: projectId,
       },
       take: limit,
       skip: cursor ? 1 : undefined,
-      cursor: cursor ? { id: cursor }: undefined,
+      cursor: cursor ? { id: cursor } : undefined,
       orderBy: {
         id: 'asc',
       },
     });
+
+    return {
+      nextCursor: data.at(-1) ? data.at(-1).id : null,
+      data: data,
+    };
   }
 
   findOne(id: number) {
@@ -32,7 +41,7 @@ export class TodosService {
   update(id: number, updateTodoDto: UpdateTodoDto) {
     return this.prisma.todo.update({
       where: { id },
-      data: updateTodoDto
+      data: updateTodoDto,
     });
   }
 
