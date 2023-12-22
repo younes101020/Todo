@@ -5,9 +5,12 @@ import { getTodos, useTodoQueryKey } from "@/features/todos/api";
 import { Todo as TodoType } from "@/features/todos/types";
 import { Spinner } from "./ui";
 import { Todo } from "./todo";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 const Todos = () => {
+  const { ref, inView } = useInView();
+
   const {
     data,
     error,
@@ -18,10 +21,19 @@ const Todos = () => {
     status
   } = useInfiniteQuery({
     queryKey: useTodoQueryKey.infinite(),
-    queryFn: ({ pageParam }) => getTodos({ cursor: pageParam, initiatorId: 1 }),
+    queryFn: ({ pageParam }) =>
+      getTodos({ cursor: pageParam, initiatorId: 96 }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage, pages) => lastPage.nextCursor
+    getNextPageParam: (lastPage, pages) => {
+      return lastPage.nextCursor;
+    }
   });
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView]);
 
   return (
     <div className="flex flex-col justify-center py-5">
@@ -33,7 +45,7 @@ const Todos = () => {
         ) : (
           data.pages.map((group, i) => (
             <Fragment key={i}>
-              {group.map(
+              {group.data.map(
                 ({
                   id,
                   title,
@@ -57,6 +69,7 @@ const Todos = () => {
         )}
         <div>
           <button
+            ref={ref}
             onClick={() => fetchNextPage()}
             disabled={!hasNextPage || isFetchingNextPage}
           >

@@ -18,7 +18,8 @@ export default async function useGetTodos() {
 
   await queryClient.prefetchInfiniteQuery({
     queryKey: useTodoQueryKey.infinite(),
-    queryFn: ({ pageParam }) => getTodos({ cursor: pageParam, initiatorId: 1 }),
+    queryFn: ({ pageParam }) =>
+      getTodos({ cursor: pageParam, initiatorId: 96 }),
     initialPageParam: 0
   });
 

@@ -28,7 +28,9 @@
     ],
     "*.json": [
       "prettier --write"
-    ]
+    ],
+    "*.js": "eslint --cache --fix",
+    "*.{ts,tsx,md}": "prettier --write"
   },
   "author": "",
   "license": "ISC"
