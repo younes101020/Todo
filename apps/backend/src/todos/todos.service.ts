@@ -39,9 +39,47 @@ export class TodosService {
   }
 
   update(id: number, updateTodoDto: UpdateTodoDto) {
+    if (updateTodoDto.status === 'DONE') {
+      return this.prisma.$transaction(async (tx) => {
+        const totalTodos = await tx.todo.count({
+          where: {
+            initiatorId: updateTodoDto.initiatorId,
+          },
+        });
+
+        if (totalTodos === 1) {
+          return tx.project.delete({
+            where: {
+              id: updateTodoDto.initiatorId,
+            },
+          });
+        }
+
+        await tx.todo.delete({
+          where: {
+            id,
+          },
+        });
+
+        const progress = (1 / totalTodos) * 100;
+
+        const newProgress = await tx.project.update({
+          where: { id: updateTodoDto.initiatorId },
+          data: {
+            progress,
+          },
+        });
+
+        return newProgress;
+      });
+    }
     return this.prisma.todo.update({
-      where: { id },
-      data: updateTodoDto,
+      where: {
+        id,
+      },
+      data: {
+        status: updateTodoDto.status,
+      },
     });
   }
 

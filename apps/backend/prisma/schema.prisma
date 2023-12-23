@@ -27,7 +27,7 @@ model Todo {
   tags        String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  initiator   Project  @relation(fields: [initiatorId], references: [id])
+  initiator   Project  @relation(fields: [initiatorId], references: [id], onDelete: Cascade)
   initiatorId Int
 }
 
