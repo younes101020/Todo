@@ -26,7 +26,7 @@ describe('TodosService', () => {
     prismaclient = module.get(PrismaService);
   });
 
-  it('not throw error and return the correct object', async () => {
+  it('nextCursor is the id of the last returning object', async () => {
     const data = [
       {
         id: 1,
@@ -39,7 +39,7 @@ describe('TodosService', () => {
         initiatorId: 2,
       },
       {
-        id: 1,
+        id: 2,
         title: 'nourrir chat',
         status: 'NOT_STARTED' as Status,
         priority: 1,
@@ -51,16 +51,15 @@ describe('TodosService', () => {
     ];
 
     const mockedData = {
-      nextCursor: 0,
-      data,
+      nextCursor: 2,
+      data: data,
     };
 
-    prismaclient.todo.findMany = jest.fn().mockReturnValueOnce(mockedData);
-    (await service.findAll({ cursor: 1, limit: 2, initiatorId: 2 })).data =
-      data;
+    prismaclient.todo.findMany = jest.fn().mockReturnValueOnce(mockedData.data);
 
-    expect(service.findAll({ cursor: 1, limit: 2, initiatorId: 2 })).toBe(
-      mockedData,
-    );
+    //here the arguments passed to findAll will have no effect on the test since we've already mocked the result of prisma findMany
+    expect(
+      await service.findAll({ cursor: 1, limit: 2, initiatorId: 2 }),
+    ).toStrictEqual(mockedData);
   });
 });
