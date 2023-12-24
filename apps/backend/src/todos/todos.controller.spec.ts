@@ -26,18 +26,41 @@ describe('TodosController', () => {
   });
 
   it('find all todos', async () => {
-    service.findAll.mockResolvedValueOnce([
-      {
-        id: 2,
-        title: 'promener le chat',
-        status: 'NOT_STARTED',
-        priority: 1,
-        tags: ['animaux', 'chat'],
-        createdAt: mydate,
-        updatedAt: mydate,
-        initiatorId: 2,
-      },
-    ]);
+    service.findAll.mockResolvedValueOnce({
+      nextCursor: 12,
+      data: [
+        {
+          id: 6,
+          title: 'promener le loup',
+          status: 'NOT_STARTED',
+          priority: 1,
+          tags: ['animaux', 'loup'],
+          createdAt: mydate,
+          updatedAt: mydate,
+          initiatorId: 2,
+        },
+        {
+          id: 7,
+          title: 'promener la tortue',
+          status: 'NOT_STARTED',
+          priority: 1,
+          tags: ['tortue', 'animaux'],
+          createdAt: mydate,
+          updatedAt: mydate,
+          initiatorId: 2,
+        },
+        {
+          id: 8,
+          title: 'promener le chien',
+          status: 'NOT_STARTED',
+          priority: 1,
+          tags: ['chien'],
+          createdAt: mydate,
+          updatedAt: mydate,
+          initiatorId: 2,
+        },
+      ],
+    });
 
     const allTodos = controller.findMany({
       cursor: 6,
@@ -45,17 +68,40 @@ describe('TodosController', () => {
       initiatorId: 2,
     });
 
-    await expect(allTodos).resolves.toStrictEqual([
-      {
-        id: 2,
-        title: 'promener le chat',
-        status: 'NOT_STARTED',
-        priority: 1,
-        tags: ['animaux', 'chat'],
-        createdAt: mydate,
-        updatedAt: mydate,
-        initiatorId: 2,
-      },
-    ]);
+    await expect(allTodos).resolves.toStrictEqual({
+      nextCursor: 12,
+      data: [
+        {
+          id: 6,
+          title: 'promener le loup',
+          status: 'NOT_STARTED',
+          priority: 1,
+          tags: ['animaux', 'loup'],
+          createdAt: mydate,
+          updatedAt: mydate,
+          initiatorId: 2,
+        },
+        {
+          id: 7,
+          title: 'promener la tortue',
+          status: 'NOT_STARTED',
+          priority: 1,
+          tags: ['tortue', 'animaux'],
+          createdAt: mydate,
+          updatedAt: mydate,
+          initiatorId: 2,
+        },
+        {
+          id: 8,
+          title: 'promener le chien',
+          status: 'NOT_STARTED',
+          priority: 1,
+          tags: ['chien'],
+          createdAt: mydate,
+          updatedAt: mydate,
+          initiatorId: 2,
+        },
+      ],
+    });
   });
 });
