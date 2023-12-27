@@ -1,8 +1,6 @@
 import { BaseEntity } from "@/types";
 
-export type Todo = {
+export type Project = {
   title: string;
-  status: "DONE" | "NOT_STARTED" | "IN_PROGRESS";
-  priority: 1 | 2 | 3;
-  tags: string[];
+  progress: number;
 } & BaseEntity;

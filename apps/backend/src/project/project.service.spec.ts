@@ -19,7 +19,7 @@ describe('ProjectService', () => {
   });
 
   it('should be defined', () => {
+    prismaclient.todo.count = jest.fn().mockReturnValueOnce(0);
     expect(service).toBeDefined();
-    console.log(prismaclient);
   });
 });
