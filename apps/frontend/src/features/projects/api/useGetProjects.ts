@@ -11,10 +11,9 @@ export const getProjects = async () => {
 export default async function useGetProjects() {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchInfiniteQuery({
+  await queryClient.prefetchQuery({
     queryKey: useProjectQueryKey.all,
-    queryFn: ({ pageParam }) => getProjects(),
-    initialPageParam: 0
+    queryFn: () => getProjects()
   });
 
   return queryClient;

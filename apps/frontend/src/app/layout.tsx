@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="fr">
       <body className={inter.className}>
         <ReactQueryProvider>
-          <main className="bg-slate-900">{children}</main>
+          <main className="bg-indigo-950">{children}</main>
           <DevToolsQuery />
         </ReactQueryProvider>
       </body>

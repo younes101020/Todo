@@ -2,16 +2,14 @@
  * @jest-environment jsdom
  */
 import { render, screen } from "@testing-library/react";
-import { Sidebar } from "@/features/projects/components/sidebar";
+import { ProgressBar } from "../components/ui";
 
-describe("sidebar static", () => {
-  it("renders a heading", () => {
-    render(<Sidebar />);
+describe("progressbar static", () => {
+  it("renders correct progress val", () => {
+    render(<ProgressBar value={50} />);
 
-    const listitem = screen.getByRole("heading", {
-      name: "Projet(s) 🧑‍💻"
-    });
+    const texts = screen.getByText("50% réaliser");
 
-    expect(listitem).toBeInTheDocument();
+    expect(texts).toBeInTheDocument();
   });
 });
