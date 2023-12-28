@@ -3,7 +3,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getTodos, useTodoQueryKey } from "@/features/todos/api";
 import { Todo as TodoType } from "@/features/todos/types";
-import { Spinner } from "./ui";
+import { Spinner } from "@/components/ui";
 import { Todo } from "./todo";
 import { Fragment, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
@@ -82,7 +82,7 @@ const Todos = () => {
         </div>
         <div>{isFetching && !isFetchingNextPage ? "Fetching..." : null}</div>
       </ul>
-      <hr className="h-px my-7 bg-slate-600 border-0" />
+      <hr className="h-px my-7 bg-indigo-600 border-0" />
     </div>
   );
 };
