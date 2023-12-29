@@ -13,22 +13,22 @@ const Sidebar = () => {
   });
 
   return (
-    <aside className="w-2/12 bg-indigo-900 h-screen flex flex-col items-center text-white p-6 fixed top-0 left-0">
+    <aside className="overflow-auto w-2/12 bg-indigo-900 h-screen flex flex-col items-center text-white p-6 fixed top-0 left-0">
       <h1 className="text-2xl font-medium">Projet(s) 🧑‍💻</h1>
-      <ul className="inline-block mt-4 *:truncate">
-        {status === "pending" ? (
-          <Spinner />
-        ) : status === "error" ? (
-          <span>Error: {error.message}</span>
-        ) : (
-          data.slice(2, 5).map((project: ProjectProps) => {
+      {status === "pending" ? (
+        <Spinner />
+      ) : status === "error" ? (
+        <span>Error: {error.message}</span>
+      ) : (
+        <ul className="w-3/4 mt-4 *:truncate flex flex-col gap-4">
+          {data.slice(2, 12).map((project: ProjectProps) => {
             return <Project key={project.id} {...project} />;
-          })
-        )}
-        <li className="flex justify-center rounded border-dashed border-2 mt-2">
-          +
-        </li>
-      </ul>
+          })}
+          <li className="h-12 flex justify-center items-center rounded text-xl border-dashed border-2 mt-2">
+            +
+          </li>
+        </ul>
+      )}
     </aside>
   );
 };
