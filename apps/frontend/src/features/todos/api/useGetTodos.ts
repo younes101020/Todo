@@ -1,6 +1,10 @@
 import { getQueryClient } from "@/hooks";
 import { useTodoQueryKey } from "./useTodoQueryKey";
 import { apiClient } from "./http-common";
+import { useProjectQueryKey } from "@/features/projects/api";
+import { useQueryClient } from "@tanstack/react-query";
+import { useGetProjects } from "@/features/projects/api";
+import { Project } from "@/features/projects/types";
 
 type Lazyloading = {
   initiatorId: number;
@@ -15,11 +19,18 @@ export const getTodos = async (queryParams: Lazyloading) => {
 // Prefetch todos from server side
 export default async function useGetTodos() {
   const queryClient = getQueryClient();
+  const projectsClient = await useGetProjects();
+  const projects = projectsClient.getQueryData(
+    useProjectQueryKey.all
+  ) as Project[];
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: useTodoQueryKey.infinite(),
+    queryKey: useTodoQueryKey.infinite(parseInt(projects[0].id)),
     queryFn: ({ pageParam }) =>
-      getTodos({ cursor: pageParam, initiatorId: 96 }),
+      getTodos({
+        cursor: pageParam,
+        initiatorId: parseInt(projects[0].id)
+      }),
     initialPageParam: 0
   });
 

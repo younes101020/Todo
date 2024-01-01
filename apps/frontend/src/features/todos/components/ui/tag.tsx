@@ -30,7 +30,9 @@ const Tag = ({ tag }: { tag: string }) => {
     TAILWIND_COLORS[Math.floor(Math.random() * TAILWIND_COLORS.length)];
 
   return (
-    <li className={`${background} ${border} ${text} border-2 px-2 rounded-lg`}>
+    <li
+      className={`${background} ${border} ${text} border-2 px-2 rounded-lg truncate flex justify-center`}
+    >
       #{tag}
     </li>
   );

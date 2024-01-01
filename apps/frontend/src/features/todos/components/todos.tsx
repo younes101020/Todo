@@ -7,9 +7,11 @@ import { Spinner } from "@/components/ui";
 import { Todo } from "./todo";
 import { Fragment, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import { useTodoStore } from "@/stores";
 
 const Todos = () => {
   const { ref, inView } = useInView();
+  const { projectId } = useTodoStore();
 
   const {
     data,
@@ -20,10 +22,11 @@ const Todos = () => {
     isFetchingNextPage,
     status
   } = useInfiniteQuery({
-    queryKey: useTodoQueryKey.infinite(),
+    queryKey: useTodoQueryKey.infinite(projectId),
     queryFn: ({ pageParam }) =>
-      getTodos({ cursor: pageParam, initiatorId: 96 }),
+      getTodos({ cursor: pageParam, initiatorId: projectId }),
     initialPageParam: 0,
+    //enabled: !!projectId,
     getNextPageParam: (lastPage, pages) => {
       return lastPage.nextCursor;
     }
@@ -34,6 +37,8 @@ const Todos = () => {
       fetchNextPage();
     }
   }, [fetchNextPage, inView]);
+
+  console.log(data);
 
   return (
     <div className="flex flex-col justify-center py-5">
