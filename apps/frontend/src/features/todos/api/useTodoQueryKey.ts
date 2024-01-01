@@ -3,8 +3,9 @@
 // https://tkdodo.eu/blog/leveraging-the-query-function-context#query-key-factories
 
 export const useTodoQueryKey = {
-  all: ["todos"],
-  details: () => [...useTodoQueryKey.all, "detail"],
-  detail: (id: number) => [...useTodoQueryKey.details(), id],
-  infinite: (cursor: number = 0) => [...useTodoQueryKey.all, "infinite", cursor]
+  all: ["todos"] as const,
+  details: () => [...useTodoQueryKey.all, "detail"] as const,
+  detail: (id: number) => [...useTodoQueryKey.details(), id] as const,
+  infinite: (projectId: number, cursor: number = 0) =>
+    [...useTodoQueryKey.all, projectId, cursor] as const
 };

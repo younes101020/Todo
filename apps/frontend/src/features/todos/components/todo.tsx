@@ -32,7 +32,7 @@ const Todo = ({
 
   return (
     <li
-      className={`h-20 flex flex-col gap-2 border-2 px-5 py-2 ${color} rounded-md border-dotted ring-offset-slate-900 ring-2 ring-offset-2`}
+      className={`flex flex-col gap-2 border-2 px-5 py-2 ${color} rounded-md border-dotted ring-offset-slate-900 ring-2 ring-offset-2`}
     >
       <div className="flex gap-2 items-center">
         <input
@@ -44,7 +44,7 @@ const Todo = ({
         />
         <h1 className="text-sm whitespace-nowrap ">{title}</h1>
       </div>
-      <ul className="font-light flex gap-2 text-xs">
+      <ul className="font-light grid grid-cols-3 gap-2 text-xs">
         {tags.map((tag, index) => {
           return <Tag key={index} tag={tag} />;
         })}
