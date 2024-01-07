@@ -3,10 +3,6 @@
 import { Todo as TodoType } from "@/features/todos/types";
 import { Tag } from "./ui";
 
-const initialData = {
-  priority: "border-green-400/75 ring-green-400/50"
-};
-
 const Todo = ({
   title,
   tags,
@@ -42,7 +38,7 @@ const Todo = ({
                 checked:bg-blue-500 checked:border-0
                 disabled:border-steel-400 disabled:bg-steel-400"
         />
-        <h1 className="text-sm whitespace-nowrap ">{title}</h1>
+        <h1 className="text-sm whitespace-nowrap text-white">{title}</h1>
       </div>
       <ul className="font-light grid grid-cols-3 gap-2 text-xs">
         {tags.map((tag, index) => {

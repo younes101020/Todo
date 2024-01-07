@@ -1,3 +1,13 @@
+"use client";
+import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+type TagsStyle = {
+  background: string;
+  border: string;
+  text: string;
+};
+
 const Tag = ({ tag }: { tag: string }) => {
   const TAILWIND_COLORS = [
     {
@@ -26,15 +36,21 @@ const Tag = ({ tag }: { tag: string }) => {
       text: "text-teal-100"
     }
   ];
-  const { background, border, text } =
-    TAILWIND_COLORS[Math.floor(Math.random() * TAILWIND_COLORS.length)];
 
-  return (
+  const [tagStyle] = useState<TagsStyle[]>(TAILWIND_COLORS);
+  const [selectedStyle, setSelectedStyle] = useState<TagsStyle>();
+  useEffect(() => {
+    setSelectedStyle(tagStyle[Math.floor(Math.random() * 5)]);
+  }, [tagStyle]);
+
+  return selectedStyle ? (
     <li
-      className={`${background} ${border} ${text} border-2 px-2 rounded-lg truncate flex justify-center`}
+      className={`${selectedStyle.background} ${selectedStyle.border} ${selectedStyle.text} border-2 px-2 rounded-lg truncate flex justify-center`}
     >
       #{tag}
     </li>
+  ) : (
+    <Skeleton className="h-4 bg-indigo-500/50" />
   );
 };
 
