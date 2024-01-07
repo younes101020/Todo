@@ -38,17 +38,15 @@ const Todos = () => {
     }
   }, [fetchNextPage, inView]);
 
-  console.log(data);
-
   return (
     <div className="flex flex-col justify-center py-5">
-      <ul className="w-80 flex flex-col gap-5 justify-center">
-        {status === "pending" ? (
-          <Spinner />
-        ) : status === "error" ? (
-          <span>Error: {error.message}</span>
-        ) : (
-          data.pages.map((group, i) => (
+      {status === "pending" ? (
+        <Spinner />
+      ) : status === "error" ? (
+        <span>Error: {error.message}</span>
+      ) : (
+        <ul className="w-80 flex flex-col gap-5 justify-center">
+          {data.pages.map((group, i) => (
             <Fragment key={i}>
               {group.data.map(
                 ({
@@ -70,23 +68,23 @@ const Todos = () => {
                 )
               )}
             </Fragment>
-          ))
-        )}
-        <div>
-          <button
-            ref={ref}
-            onClick={() => fetchNextPage()}
-            disabled={!hasNextPage || isFetchingNextPage}
-          >
-            {isFetchingNextPage
-              ? "Loading more..."
-              : hasNextPage
-                ? "Load More"
-                : "Nothing more to load"}
-          </button>
-        </div>
-        <div>{isFetching && !isFetchingNextPage ? "Fetching..." : null}</div>
-      </ul>
+          ))}
+        </ul>
+      )}
+      <div>
+        <button
+          ref={ref}
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage || isFetchingNextPage}
+        >
+          {isFetchingNextPage
+            ? "Loading more..."
+            : hasNextPage
+              ? "Load More"
+              : "Nothing more to load"}
+        </button>
+      </div>
+      <div>{isFetching && !isFetchingNextPage ? "Fetching..." : null}</div>
       <hr className="h-px my-7 bg-indigo-600 border-0" />
     </div>
   );
