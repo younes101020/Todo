@@ -2,6 +2,75 @@
 
 import { Todo as TodoType } from "@/features/todos/types";
 import { Tag } from "./ui";
+import { MoreHorizontal, Trash, Pencil } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  Dialog,
+  DialogTrigger,
+  Checkbox,
+  //Label,
+  Input,
+  DialogFooter,
+  Button,
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from "@/components/ui";
+import { ActiveDialog, AutoComplete } from "@/components";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+const FRAMEWORKS = [
+  {
+    value: "next.js",
+    label: "Next.js"
+  },
+  {
+    value: "sveltekit",
+    label: "SvelteKit"
+  },
+  {
+    value: "nuxt.js",
+    label: "Nuxt.js"
+  },
+  {
+    value: "remix",
+    label: "Remix"
+  },
+  {
+    value: "astro",
+    label: "Astro"
+  },
+  {
+    value: "wordpress",
+    label: "WordPress"
+  },
+  {
+    value: "express.js",
+    label: "Express.js"
+  },
+  {
+    value: "nest.js",
+    label: "Nest.js"
+  }
+];
+
+const formSchema = z.object({
+  title: z.string().min(5, {
+    message: "Le titre doit comporter au moins 5 caractères."
+  }),
+  status: z.enum(["NOT_STARTED", "IN_PROGRESS"]),
+  priority: z.enum(["1", "2", "3"]),
+  tags: z.string()
+});
 
 const Todo = ({
   title,
@@ -26,21 +95,120 @@ const Todo = ({
       color = "";
   }
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      status: "NOT_STARTED",
+      priority: "1",
+      tags: ""
+    }
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
+
   return (
     <li
-      className={`flex flex-col gap-2 border-2 px-5 py-2 ${color} rounded-md border-dotted ring-offset-slate-900 ring-2 ring-offset-2`}
+      className={`flex flex-col divide-y divide-foreground/50 gap-6 border-2 px-5 py-4 ${color} rounded-md border-dotted ring-offset-slate-900 ring-2 ring-offset-2`}
     >
       <div className="flex gap-2 items-center">
-        <input
-          type="checkbox"
-          className="appearance-none w-4 h-4 border-2 border-slate-400/75 rounded-full bg-white
-                focus:outline-none focus:ring-offset-0 focus:ring-1 focus:ring-blue-100
-                checked:bg-blue-500 checked:border-0
-                disabled:border-steel-400 disabled:bg-steel-400"
-        />
-        <h1 className="text-sm whitespace-nowrap text-white">{title}</h1>
+        <Checkbox />
+        {"/"}
+        <h1 className="whitespace-nowrap">{title}</h1>
+        <Dialog>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="ml-auto cursor-pointer" asChild>
+              <MoreHorizontal size={20} className="stroke-primary" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-[160px]">
+              <DialogTrigger asChild>
+                <DropdownMenuItem className="cursor-pointer">
+                  <div className="flex gap-2">
+                    <Pencil size={18} />
+                    <span>/</span>
+                    <p>Modifier</p>
+                  </div>
+                </DropdownMenuItem>
+              </DialogTrigger>
+              <DropdownMenuItem className="cursor-pointer">
+                <div className="flex gap-2 text-destructive">
+                  <Trash size={18} className="stroke-destructive" />
+                  <span>/</span>
+                  <p>Supprimer</p>
+                </div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <ActiveDialog title={title}>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8"
+              >
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Titre</FormLabel>
+                      <FormControl>
+                        <Input placeholder={title} {...field} />
+                        <AutoComplete
+                          options={FRAMEWORKS}
+                          emptyMessage="No resulsts."
+                          placeholder="Find something"
+                          isLoading={false}
+                          //onValueChange={setValue}
+                          value={null}
+                          disabled={false}
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        This is your public display name.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <DialogFooter>
+                  <Button type="submit">Enregistrer</Button>
+                </DialogFooter>
+              </form>
+            </Form>
+            {/* <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right">
+                          Titre
+                        </Label>
+                        <Input id="name" value={title} className="col-span-3" />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="username" className="text-right">
+                          Username
+                        </Label>
+                        <Input id="username" value="@peduarte" className="col-span-3" />
+                      </div>
+                    </div>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right">
+                          Titre
+                        </Label>
+                        <Input id="name" value={title} className="col-span-3" />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="username" className="text-right">
+                          Username
+                        </Label>
+                        <Input id="username" value="@peduarte" className="col-span-3" />
+                      </div>
+                </div> */}
+          </ActiveDialog>
+        </Dialog>
       </div>
-      <ul className="font-light grid grid-cols-3 gap-2 text-xs">
+      <ul className="font-light grid grid-cols-3 gap-2 text-xs pt-5">
         {tags.map((tag, index) => {
           return <Tag key={index} tag={tag} />;
         })}

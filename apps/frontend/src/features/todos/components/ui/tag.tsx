@@ -50,7 +50,7 @@ const Tag = ({ tag }: { tag: string }) => {
       #{tag}
     </li>
   ) : (
-    <Skeleton className="h-4 bg-indigo-500/50" />
+    <Skeleton className="h-4" />
   );
 };
 
