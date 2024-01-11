@@ -2,7 +2,9 @@
 
 import { Todo as TodoType } from "@/features/todos/types";
 import { Tag } from "./ui";
+import { useState } from "react";
 import { MoreHorizontal, Trash, Pencil } from "lucide-react";
+import { MentionsInput, Mention } from "react-mentions";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,50 +25,13 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui";
-import { ActiveDialog, AutoComplete } from "@/components";
+import { ActiveDialog } from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-const FRAMEWORKS = [
-  {
-    value: "next.js",
-    label: "Next.js"
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit"
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js"
-  },
-  {
-    value: "remix",
-    label: "Remix"
-  },
-  {
-    value: "astro",
-    label: "Astro"
-  },
-  {
-    value: "wordpress",
-    label: "WordPress"
-  },
-  {
-    value: "express.js",
-    label: "Express.js"
-  },
-  {
-    value: "nest.js",
-    label: "Nest.js"
-  }
-];
-
 const formSchema = z.object({
-  title: z.string().min(5, {
-    message: "Le titre doit comporter au moins 5 caractères."
-  }),
+  title: z.string(),
   status: z.enum(["NOT_STARTED", "IN_PROGRESS"]),
   priority: z.enum(["1", "2", "3"]),
   tags: z.string()
@@ -109,13 +74,20 @@ const Todo = ({
     console.log(values);
   }
 
+  const handleMention = ({
+    entry,
+    search,
+    highlightedDisplay,
+    index,
+    focused
+  }: any) => {};
+
   return (
     <li
       className={`flex flex-col divide-y divide-foreground/50 gap-6 border-2 px-5 py-4 ${color} rounded-md border-dotted ring-offset-slate-900 ring-2 ring-offset-2`}
     >
       <div className="flex gap-2 items-center">
         <Checkbox />
-        {"/"}
         <h1 className="whitespace-nowrap">{title}</h1>
         <Dialog>
           <DropdownMenu>
@@ -127,7 +99,6 @@ const Todo = ({
                 <DropdownMenuItem className="cursor-pointer">
                   <div className="flex gap-2">
                     <Pencil size={18} />
-                    <span>/</span>
                     <p>Modifier</p>
                   </div>
                 </DropdownMenuItem>
@@ -135,7 +106,6 @@ const Todo = ({
               <DropdownMenuItem className="cursor-pointer">
                 <div className="flex gap-2 text-destructive">
                   <Trash size={18} className="stroke-destructive" />
-                  <span>/</span>
                   <p>Supprimer</p>
                 </div>
               </DropdownMenuItem>
@@ -154,19 +124,22 @@ const Todo = ({
                     <FormItem>
                       <FormLabel>Titre</FormLabel>
                       <FormControl>
-                        <Input placeholder={title} {...field} />
-                        <AutoComplete
-                          options={FRAMEWORKS}
-                          emptyMessage="No resulsts."
-                          placeholder="Find something"
-                          isLoading={false}
-                          //onValueChange={setValue}
-                          value={null}
-                          disabled={false}
-                        />
+                        {/* <Input placeholder={title} {...field} /> */}
+                        <MentionsInput {...field}>
+                          <Mention
+                            trigger="@"
+                            data={[{ id: "fred", display: "Fred" }]}
+                            //renderSuggestion={handleMention}
+                          />
+                          <Mention
+                            trigger="#"
+                            data={[{ id: "mode", display: "Mode" }]}
+                            //renderSuggestion={handleMention}
+                          />
+                        </MentionsInput>
                       </FormControl>
                       <FormDescription>
-                        This is your public display name.
+                        Pour ajouter des tags utilisez #
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
