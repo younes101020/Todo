@@ -11,10 +11,8 @@ const Project = ({ progress, title, id }: ProjectProps) => {
     <li
       onClick={() => updateSelectedProject(parseInt(id))}
       className={`transition flex flex-col gap-2 p-4 cursor-pointer ${
-        projectId === parseInt(id)
-          ? "bg-indigo-950/50"
-          : "hover:bg-indigo-950/50"
-      } duration-300 outline-dotted outline-2 outline-offset-2 rounded outline-indigo-950`}
+        projectId === parseInt(id) ? "bg-card" : "hover:bg-card"
+      } duration-300 outline-dotted outline-2 outline-offset-2 rounded outline-primary`}
     >
       <p className="truncate">{title}</p>
       <ProgressBar value={progress} />

@@ -2,9 +2,7 @@
 
 import { Todo as TodoType } from "@/features/todos/types";
 import { Tag } from "./ui";
-import { useState } from "react";
 import { MoreHorizontal, Trash, Pencil } from "lucide-react";
-import { MentionsInput, Mention } from "react-mentions";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,7 +23,7 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui";
-import { ActiveDialog } from "@/components";
+import { ActiveDialog, MentionField } from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -74,14 +72,6 @@ const Todo = ({
     console.log(values);
   }
 
-  const handleMention = ({
-    entry,
-    search,
-    highlightedDisplay,
-    index,
-    focused
-  }: any) => {};
-
   return (
     <li
       className={`flex flex-col divide-y divide-foreground/50 gap-6 border-2 px-5 py-4 ${color} rounded-md border-dotted ring-offset-slate-900 ring-2 ring-offset-2`}
@@ -115,7 +105,7 @@ const Todo = ({
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
+                className="space-y-8 overflow-hidden"
               >
                 <FormField
                   control={form.control}
@@ -124,19 +114,7 @@ const Todo = ({
                     <FormItem>
                       <FormLabel>Titre</FormLabel>
                       <FormControl>
-                        {/* <Input placeholder={title} {...field} /> */}
-                        <MentionsInput {...field}>
-                          <Mention
-                            trigger="@"
-                            data={[{ id: "fred", display: "Fred" }]}
-                            //renderSuggestion={handleMention}
-                          />
-                          <Mention
-                            trigger="#"
-                            data={[{ id: "mode", display: "Mode" }]}
-                            //renderSuggestion={handleMention}
-                          />
-                        </MentionsInput>
+                        <MentionField field={field} tags={tags} />
                       </FormControl>
                       <FormDescription>
                         Pour ajouter des tags utilisez #

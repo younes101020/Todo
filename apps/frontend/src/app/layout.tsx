@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body className={`${inter.className} bg-background`}>
+      <body className={`${inter.className} bg-background text-foreground`}>
         <ReactQueryProvider>
           <ThemeProvider
             attribute="class"
