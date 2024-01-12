@@ -41,7 +41,8 @@ const Tag = ({ tag }: { tag: string }) => {
   const [selectedStyle, setSelectedStyle] = useState<TagsStyle>();
   useEffect(() => {
     setSelectedStyle(tagStyle[Math.floor(Math.random() * 5)]);
-  }, [tagStyle]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return selectedStyle ? (
     <li
@@ -50,7 +51,7 @@ const Tag = ({ tag }: { tag: string }) => {
       #{tag}
     </li>
   ) : (
-    <Skeleton className="h-4 bg-indigo-500/50" />
+    <Skeleton className="h-4" />
   );
 };
 

@@ -23,7 +23,7 @@ const Projects = () => {
           {data.map((project: ProjectProps) => {
             return <Project key={project.id} {...project} />;
           })}
-          <li className="transition cursor-pointer h-12 flex justify-center items-center rounded text-2xl outline-dotted outline-2 outline-offset-2 outline-white mt-2 hover:bg-indigo-950">
+          <li className="transition cursor-pointer h-12 flex justify-center items-center rounded text-2xl outline-dotted outline-2 outline-offset-2 outline-primary mt-2 hover:bg-primary-950">
             +
           </li>
         </ul>

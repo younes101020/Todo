@@ -3,7 +3,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getTodos, useTodoQueryKey } from "@/features/todos/api";
 import { Todo as TodoType } from "@/features/todos/types";
-import { Spinner } from "@/components/ui";
+import { Spinner, Button } from "@/components/ui";
 import { Todo } from "./todo";
 import { Fragment, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
@@ -71,21 +71,21 @@ const Todos = () => {
           ))}
         </ul>
       )}
-      <div>
-        <button
+      <div className="flex justify-center py-5">
+        <Button
           ref={ref}
           onClick={() => fetchNextPage()}
           disabled={!hasNextPage || isFetchingNextPage}
+          className="bg-secondary text-secondary-foreground"
         >
           {isFetchingNextPage
             ? "Loading more..."
             : hasNextPage
-              ? "Load More"
-              : "Nothing more to load"}
-        </button>
+              ? "Charger plus"
+              : "Plus rien à charger"}
+        </Button>
       </div>
       <div>{isFetching && !isFetchingNextPage ? "Fetching..." : null}</div>
-      <hr className="h-px my-7 bg-indigo-600 border-0" />
     </div>
   );
 };

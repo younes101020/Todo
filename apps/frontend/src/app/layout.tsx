@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ReactQueryProvider } from "@/provider";
-import { DevToolsQuery } from "@/components";
+import { ReactQueryProvider, ThemeProvider } from "@/provider";
+import { DevToolsQuery, ModeToggle } from "@/components";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +18,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-background text-foreground`}>
         <ReactQueryProvider>
-          <main className="bg-indigo-950">{children}</main>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <header className="absolute w-full flex justify-end p-4">
+              <ModeToggle />
+            </header>
+            <main>{children}</main>
+          </ThemeProvider>
           <DevToolsQuery />
         </ReactQueryProvider>
       </body>
