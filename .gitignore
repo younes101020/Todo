@@ -1,4 +1,6 @@
 .turbo
 node_modules
-apps/backend/dist
+apps/api/dist
+apps/api/node_modules
+apps/web/node_modules
 .env
