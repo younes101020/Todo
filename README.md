@@ -26,10 +26,18 @@ This web-based todolist application offers an intuitive interface to easily mana
 1. Clone the repository: `git clone git@github.com:younes101020/Todo.git`
 2. Navigate to the directory: `cd Todo`
 3. Install dependencies: `npm install`
-4. Sync database with our prisma migration files `cd apps/backend && npx prisma migrate dev`
-5. Sync the prisma client you initially installed with prisma our schema `npx prisma generate`
-6. Seed database with sample data `npx prisma db seed`
-7. Start the application: `cd ../../ && npm run dev`
+4. Create .env file into root of project and add these variables on it, make sure to update database credentials
+
+```
+DATABASE_URL="postgres://<POSTGRES_USER>:<POSTGRES_PASS>@localhost:5432/todo"
+REST_API_BASE_URL="http://localhost:3001"
+```
+
+5. Create "todo" database
+6. Sync database with our prisma migration files `cd apps/backend && npx prisma migrate dev`
+7. Sync the prisma client you initially installed with prisma our schema `npx prisma generate`
+8. Seed database with sample data `npx prisma db seed`
+9. Start the application: `cd ../../ && npm run dev`
 
 ## Usage
 
