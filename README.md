@@ -26,7 +26,7 @@ This web-based todolist application offers an intuitive interface to easily mana
 1. Clone the repository: `git clone git@github.com:younes101020/Todo.git`
 2. Navigate to the directory: `cd Todo`
 3. Install dependencies: `npm install`
-4. Create .env file into root of project and add these variables on it, make sure to update database credentials
+4. Create .env.local file into root of project and add these variables on it, make sure to update database credentials
 
 ```
 DATABASE_URL="postgres://<POSTGRES_USER>:<POSTGRES_PASS>@localhost:5432/todo"
