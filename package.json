@@ -7,19 +7,18 @@
     "apps/*"
   ],
   "devDependencies": {
+    "dotenv": "^16.4.1",
     "dotenv-cli": "^7.3.0",
     "eslint": "^8.47.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "prettier": "^3.0.2",
-    "tsconfig": "*",
-    "turbo": "latest"
+    "tsconfig": "*"
   },
   "scripts": {
-    "build": "turbo run build",
-    "test": "turbo run test",
-    "dev": "dotenv -- turbo dev",
-    "lint": "turbo run lint",
+    "dev": "yarn workspaces foreach -p -A run dev",
+    "db:migrate": "yarn workspace backend db:migrate",
+    "db:seed": "yarn workspace backend db:seed",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install"
   },
@@ -34,5 +33,6 @@
     "*.{ts,tsx,md}": "prettier --write"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "packageManager": "yarn@4.0.2"
 }

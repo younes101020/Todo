@@ -2,7 +2,6 @@
 
 import { ControllerRenderProps } from "react-hook-form";
 import { MentionsInput, Mention } from "react-mentions";
-import { Tag } from "@/todos/components/ui";
 
 const MentionField = ({
   field,
@@ -50,7 +49,7 @@ const MentionField = ({
     >
       <Mention
         trigger="#"
-        style={{ textDecoration: "underline white" }}
+        style={{ textDecoration: "white" }}
         className="bg-popover rounded-md"
         data={existingTags}
         onAdd={handleMention}

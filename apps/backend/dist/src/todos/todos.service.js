@@ -19,8 +19,8 @@ let TodosService = class TodosService {
     create(createTodoDto) {
         return this.prisma.todo.create({ data: createTodoDto });
     }
-    findAll({ initiatorId: projectId, cursor, limit }) {
-        return this.prisma.todo.findMany({
+    async findAll({ initiatorId: projectId, cursor, limit, }) {
+        const data = await this.prisma.todo.findMany({
             where: {
                 initiatorId: projectId,
             },
@@ -31,14 +31,51 @@ let TodosService = class TodosService {
                 id: 'asc',
             },
         });
+        return {
+            nextCursor: data.at(-1) ? data.at(-1).id : null,
+            data: data,
+        };
     }
     findOne(id) {
         return this.prisma.todo.findUnique({ where: { id } });
     }
     update(id, updateTodoDto) {
+        if (updateTodoDto.status === 'DONE') {
+            return this.prisma.$transaction(async (tx) => {
+                const totalTodos = await tx.todo.count({
+                    where: {
+                        initiatorId: updateTodoDto.initiatorId,
+                    },
+                });
+                if (totalTodos === 1) {
+                    return tx.project.delete({
+                        where: {
+                            id: updateTodoDto.initiatorId,
+                        },
+                    });
+                }
+                await tx.todo.delete({
+                    where: {
+                        id,
+                    },
+                });
+                const progress = (1 / totalTodos) * 100;
+                const newProgress = await tx.project.update({
+                    where: { id: updateTodoDto.initiatorId },
+                    data: {
+                        progress,
+                    },
+                });
+                return newProgress;
+            });
+        }
         return this.prisma.todo.update({
-            where: { id },
-            data: updateTodoDto
+            where: {
+                id,
+            },
+            data: {
+                status: updateTodoDto.status,
+            },
         });
     }
     remove(id) {
