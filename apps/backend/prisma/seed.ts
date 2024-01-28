@@ -10,7 +10,7 @@ async function seedRecord() {
     length: { min: 5, max: 8 },
     strategy: 'closest',
   });
-  const todos = Array(12)
+  const todos = Array(8)
     .fill(0)
     .map(() => {
       const todoTitle = faker.lorem.word({
@@ -49,7 +49,7 @@ async function seedRecord() {
 }
 
 async function main() {
-  generateSeeding(seedRecord, 12);
+  generateSeeding(seedRecord, 8);
 }
 
 // execute the main function
