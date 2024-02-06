@@ -3,6 +3,13 @@
 import { ControllerRenderProps } from "react-hook-form";
 import { MentionsInput, Mention } from "react-mentions";
 
+type MentionProps = {
+  id: string;
+  display: string;
+};
+
+type TExistingTags = (query: string) => MentionProps[];
+
 const MentionField = ({
   field,
   tags
@@ -10,15 +17,25 @@ const MentionField = ({
   field: ControllerRenderProps<any, any>;
   tags: string[];
 }) => {
-  const existingTags = tags.map((tag) => {
-    return {
-      id: tag.toLowerCase(),
-      display: tag.at(0) + tag.slice(1)
-    };
-  });
-
-  const handleMention = () => {
-    console.log("added");
+  const renderSugg: TExistingTags = (search) => {
+    const filterTags = tags
+      .filter((tag) => {
+        return tag.startsWith(search);
+      })
+      .map((tag) => {
+        return {
+          id: tag.toLowerCase(),
+          display: tag
+        };
+      });
+    const addQuerySugg = [
+      ...filterTags,
+      {
+        id: search.toLocaleLowerCase(),
+        display: search
+      }
+    ];
+    return addQuerySugg;
   };
 
   return (
@@ -51,8 +68,10 @@ const MentionField = ({
         trigger="#"
         style={{ textDecoration: "white" }}
         className="bg-popover rounded-md"
-        data={existingTags}
-        onAdd={handleMention}
+        data={(search: string) => {
+          const data = renderSugg(search);
+          return data;
+        }}
         displayTransform={(mention) => `#${mention}`}
       />
     </MentionsInput>

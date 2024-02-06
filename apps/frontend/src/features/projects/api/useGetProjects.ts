@@ -11,7 +11,7 @@ export const getProjects = async () => {
 export default async function useGetProjects() {
   const queryClient = getQueryClient();
 
-  await queryClient.fetchQuery({
+  await queryClient.prefetchQuery({
     queryKey: useProjectQueryKey.all,
     queryFn: getProjects
   });
