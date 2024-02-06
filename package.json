@@ -1,38 +1,25 @@
 {
-  "name": "todo-app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "todo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
   "workspaces": [
     "apps/*"
   ],
-  "devDependencies": {
-    "dotenv": "^16.4.1",
-    "dotenv-cli": "^7.3.0",
-    "eslint": "^8.47.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.2.0",
-    "prettier": "^3.0.2",
-    "tsconfig": "*"
-  },
   "scripts": {
-    "dev": "yarn workspaces foreach -p -A run dev",
-    "db:migrate": "yarn workspace backend db:migrate",
-    "db:seed": "yarn workspace backend db:seed",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install"
+    "dev": "yarn workspaces foreach -A -p run dev",
+    "build": "sst build",
+    "deploy": "sst deploy",
+    "remove": "sst remove",
+    "console": "sst console",
+    "typecheck": "tsc --noEmit"
   },
-  "lint-staged": {
-    "apps/**/*.{js,ts,jsx,tsx}": [
-      "eslint --fix"
-    ],
-    "*.json": [
-      "prettier --write"
-    ],
-    "*.js": "eslint --cache --fix",
-    "*.{ts,tsx,md}": "prettier --write"
+  "devDependencies": {
+    "@tsconfig/node18": "^18.2.2",
+    "aws-cdk-lib": "2.110.1",
+    "constructs": "10.3.0",
+    "sst": "^2.39.13",
+    "typescript": "^5.3.3"
   },
-  "author": "",
-  "license": "ISC",
-  "packageManager": "yarn@4.0.2"
+  "packageManager": "yarn@4.1.0"
 }
