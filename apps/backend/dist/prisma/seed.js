@@ -2,13 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 const faker_1 = require("@faker-js/faker");
-const helper_1 = require("../src/helper");
 const prisma = new client_1.PrismaClient();
 async function seedRecord() {
-    const projectTitle = faker_1.faker.lorem.word({
-        length: { min: 5, max: 8 },
-        strategy: 'closest',
-    });
     const todos = Array(8)
         .fill(0)
         .map(() => {
@@ -30,20 +25,29 @@ async function seedRecord() {
             },
         };
     });
-    const post = await prisma.project.upsert({
-        where: { title: projectTitle },
+    const projectsTitles = Array(5)
+        .fill(0)
+        .map(() => {
+        const projectTitle = faker_1.faker.lorem.word({
+            length: { min: 5, max: 8 },
+            strategy: 'closest',
+        });
+        return projectTitle;
+    });
+    const collection = await prisma.$transaction(projectsTitles.map((title) => prisma.project.upsert({
+        where: { title },
         update: {},
         create: {
-            title: projectTitle,
+            title,
             todos: {
                 connectOrCreate: todos,
             },
         },
-    });
-    return post;
+    })));
+    return collection;
 }
 async function main() {
-    (0, helper_1.generateSeeding)(seedRecord, 8);
+    seedRecord();
 }
 main()
     .catch((e) => {

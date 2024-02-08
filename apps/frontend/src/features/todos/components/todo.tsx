@@ -69,7 +69,11 @@ const Todo = ({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    // Extract tags
+    const extractedTags = values.title.match(/@\[.*?\]/g)!;
+    // Parse tags
+    const tags = extractedTags.map((tag) => tag.slice(2, tag.length - 1));
+    console.log(tags);
   }
 
   return (
